@@ -22,13 +22,13 @@ type Append<
             : never
     : never
 
-type Evaluate<LL> = 
+type ResolveList<LL> = 
     LL extends NT<infer I, infer Next>
-        ? [I, Evaluate<Next>]
+        ? [I, ResolveList<Next>]
         : LL
 
 type LL = NT<1, null>;
 type LLI2 = Insert<2, LL>
 type LLI3 = Insert<3, LLI2>
 type LLA4 = Append<4, LLI3>
-type Resolve = Evaluate<LLA4> // Resolves to [3, [2, [1, [4, null]]]]
+type ResolvedList = ResolveList<LLA4> // Resolves to [3, [2, [1, [4, null]]]]
