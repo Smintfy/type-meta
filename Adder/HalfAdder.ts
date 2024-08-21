@@ -1,7 +1,4 @@
-type Bit = 0 | 1
-
-// Flip a bit, if bit is 0 return 1 otherwise 0
-type Flip<B extends Bit> = B extends 0 ? 1 : 0
+import { Bit, Flip } from "./Bit"
 
 // Add two bit
 // < The two bit that's going to be added
@@ -9,13 +6,13 @@ type Flip<B extends Bit> = B extends 0 ? 1 : 0
 type HalfAdder<
     A extends Bit,
     B extends Bit,
-    C extends Bit = 0
+    Cout extends Bit = 0 // Cout is carry out.
 > = A extends 0
         ? B extends 0
-            ? [C, 0]
-            : [C, 1]
+            ? [Cout, 0]
+            : [Cout, 1]
         : B extends 0
-            ? [C, 1]
-            : [Flip<C>, 0] // if A and B is 1 then the overflow from result carry out.
-
+            ? [Cout, 1]
+            : [Flip<Cout>, 0] // if A and B is 1 then the overflow from result carry out.
+        
 type ResolveHalfAdder = HalfAdder<1, 1> // Resolve to 1 0
